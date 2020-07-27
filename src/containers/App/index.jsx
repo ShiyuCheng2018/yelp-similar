@@ -6,30 +6,31 @@ import {actions as appActions, getError} from "../../redux/modules/app";
 import "./style.css";
 import Home from "../Home";
 
-const mapStateToProps = (state, props) =>{
+const mapStateToProps = (state, props) => {
 	return {
-		error: getError(state)
-	}
-}
+		error: getError(state),
+	};
+};
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		appActions: bindActionCreators(appActions, dispatch)
-	}
-}
-
+		appActions: bindActionCreators(appActions, dispatch),
+	};
+};
 
 class App extends Component {
-
 	render() {
+		const {
+			error,
+			appActions: {clearError},
+		} = this.props;
 
-		const {error, appActions: {clearError}} = this.props;
-
-		return <div className={"App"}>
-			<Home/>
-			{error? <ErrorToast msg={error} clearError={clearError}/>
-				:null}
-		</div>;
+		return (
+			<div className={"App"}>
+				<Home />
+				{error ? <ErrorToast msg={error} clearError={clearError} /> : null}
+			</div>
+		);
 	}
 }
 

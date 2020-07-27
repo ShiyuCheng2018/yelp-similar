@@ -9,25 +9,22 @@ export const types = {
 	FETCH_LIKES_FAILURE: "HOME/FETCH_LIKES_FAILURE",
 };
 
-
 export const actions = {
-
 	loadLikes: () => {
 		return (dispatch, getState) => {
 			const endpoint = url.getProductList(0, 10);
-			return dispatch(fetchLikes(endpoint))
-		}
-	}
-
+			return dispatch(fetchLikes(endpoint));
+		};
+	},
 };
 
 const fetchLikes = (endpoint) => ({
 	[FETCH_DATA]: {
 		types: [types.FETCH_LIKES_REQUEST, types.FETCH_LIKES_SUCCESS, types.FETCH_LIKES_FAILURE],
 		endpoint,
-		schema
-	}
-})
+		schema,
+	},
+});
 
 const reducer = (state = {}, action) => {
 	switch (action.type) {
