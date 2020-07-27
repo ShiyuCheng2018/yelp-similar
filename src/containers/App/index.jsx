@@ -2,8 +2,9 @@ import React, {Component} from "react";
 import ErrorToast from "../../components/ErrorToast";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {actions as appActions, getError} from "../../redux/modules/app"
+import {actions as appActions, getError} from "../../redux/modules/app";
 import "./style.css";
+import Home from "../Home";
 
 const mapStateToProps = (state, props) =>{
 	return {
@@ -25,6 +26,7 @@ class App extends Component {
 		const {error, appActions: {clearError}} = this.props;
 
 		return <div className={"App"}>
+			<Home/>
 			{error? <ErrorToast msg={error} clearError={clearError}/>
 				:null}
 		</div>;
