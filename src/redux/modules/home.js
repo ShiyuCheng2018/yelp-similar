@@ -2,22 +2,17 @@ import {get} from "../../utils/request";
 import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
 import {schema} from "./entities/products";
+import {combineReducers} from "redux";
+
+/***********************************************************************************************************************
+ * 													CONSTANTS 														   *
+ * *********************************************************************************************************************/
 
 export const params = {
 	PATH_LIKES: "likes",
 	PATH_DISCOUNTS: "discounts",
 	PAGE_SIZE_LIKES: 5,
 	PAGE_SIZE_DISCOUNTS: 3,
-};
-
-export const types = {
-	FETCH_LIKES_REQUEST: "HOME/FETCH_LIKES_REQUEST",
-	FETCH_LIKES_SUCCESS: "HOME/FETCH_LIKES_SUCCESS",
-	FETCH_LIKES_FAILURE: "HOME/FETCH_LIKES_FAILURE",
-
-	FETCH_DISCOUNTS_REQUEST: "HOME/DISCOUNTS_REQUEST",
-	FETCH_DISCOUNTS_SUCCESS: "HOME/DISCOUNTS_SUCCESS",
-	FETCH_DISCOUNTS_FAILURE: "HOME/DISCOUNTS_FAILURE",
 };
 
 const initialState = {
@@ -31,6 +26,20 @@ const initialState = {
 		ids: [],
 	},
 };
+
+export const types = {
+	FETCH_LIKES_REQUEST: "HOME/FETCH_LIKES_REQUEST",
+	FETCH_LIKES_SUCCESS: "HOME/FETCH_LIKES_SUCCESS",
+	FETCH_LIKES_FAILURE: "HOME/FETCH_LIKES_FAILURE",
+
+	FETCH_DISCOUNTS_REQUEST: "HOME/DISCOUNTS_REQUEST",
+	FETCH_DISCOUNTS_SUCCESS: "HOME/DISCOUNTS_SUCCESS",
+	FETCH_DISCOUNTS_FAILURE: "HOME/DISCOUNTS_FAILURE",
+};
+
+/***********************************************************************************************************************
+ * 													ACTIONS 														   *
+ * *********************************************************************************************************************/
 
 export const actions = {
 	loadLikes: () => {
@@ -65,20 +74,36 @@ const fetchDiscounts = (endpoint) => ({
 	},
 });
 
-const reducer = (state = {}, action) => {
+/***********************************************************************************************************************
+ * 													REDUCERS 														   *
+ * *********************************************************************************************************************/
+
+const likes = (state = initialState.likes, action) => {
 	switch (action.type) {
 		case types.FETCH_LIKES_REQUEST:
-			//todo
-			return;
+			return {...state, isFetching: true};
 		case types.FETCH_LIKES_SUCCESS:
-			// todo
-			return;
+			return {...state, isFetching: false, pageCount: state.pageCount + 1, ids: state.ids.concat(action.response.id)};
 		case types.FETCH_LIKES_FAILURE:
-			//todo
-			return;
+			return {...state, isFetching: false};
 		default:
 			return state;
 	}
 };
+
+const discounts = (state = initialState.discounts, action) => {
+	switch (action.type) {
+		case types.FETCH_DISCOUNTS_REQUEST:
+			return {...state, isFetching: true};
+		case types.FETCH_DISCOUNTS_SUCCESS:
+			return {...state, isFetching: false, ids: state.ids.concat(action.response.id)};
+		case types.FETCH_DISCOUNTS_FAILURE:
+			return {...state, isFetching: false};
+		default:
+			return state;
+	}
+};
+
+const reducer = combineReducers({discounts, likes});
 
 export default reducer;
