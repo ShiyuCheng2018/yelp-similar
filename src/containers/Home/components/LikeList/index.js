@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import LikeItem from "../LikeItem";
 import "./style.css";
+import Loading from "../../../../components/Loading";
 
 const dataSource = [
 	{
@@ -61,15 +62,69 @@ const dataSource = [
 ];
 
 class LikeList extends Component {
+	constructor(props) {
+		super(props);
+		this.myRef = React.createRef();
+		this.removeListener = false;
+		this.state = {
+			data: dataSource,
+			loadTimes: 1,
+		};
+	}
+
+	handleScroll = () => {
+		const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		const screenHeight = document.documentElement.clientHeight;
+		const likeListTop = this.myRef.current.offsetTop;
+		const likeListHeight = this.myRef.current.offsetHeight;
+
+		if (scrollTop >= likeListHeight + likeListTop - screenHeight) {
+			const newData = this.state.data.concat(dataSource);
+			const newLoadTimes = this.state.loadTimes + 1;
+			setTimeout(() => {
+				this.setState({
+					data: newData,
+					loadTimes: newLoadTimes,
+				});
+			}, 1000);
+		}
+	};
+
+	componentDidMount() {
+		document.addEventListener("scroll", this.handleScroll);
+	}
+
+	componentDidUpdate() {
+		if (this.state.loadTimes >= 3 && !this.removeListener) {
+			document.removeEventListener("scroll", this.handleScroll);
+			this.removeListener = true;
+		}
+	}
+
+	componentWillUnmount() {
+		if (this.removeListener) {
+			document.removeEventListener("scroll", this.handleScroll);
+		}
+	}
+
 	render() {
+		const {data, loadTimes} = this.state;
+
 		return (
 			<div className="likeList">
 				<div className="likeList__header">猜你喜欢</div>
-				<div className="likeList__list">
-					{dataSource.map((item, index) => {
-						return <LikeItem key={item.id} data={item} />;
+				<div className="likeList__list" ref={this.myRef}>
+					{data.map((item, i) => {
+						return <LikeItem key={i} data={item} />;
 					})}
 				</div>
+				{loadTimes < 3 ? (
+					<Loading />
+				) : (
+					<a href={""} className={"likeList__viewAll"}>
+						More products
+					</a>
+				)}
 			</div>
 		);
 	}
