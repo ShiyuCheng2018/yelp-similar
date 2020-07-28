@@ -41,7 +41,7 @@ class LikeList extends Component {
 	}
 
 	componentWillUnmount() {
-		if (this.removeListener) {
+		if (!this.removeListener) {
 			document.removeEventListener("scroll", this.handleScroll);
 		}
 	}

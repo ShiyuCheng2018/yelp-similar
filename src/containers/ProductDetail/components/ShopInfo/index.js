@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import "./style.css"
+import React, {Component} from "react";
+import "./style.css";
 
 class ShopInfo extends Component {
 	render() {
@@ -11,13 +11,11 @@ class ShopInfo extends Component {
 				</div>
 				<div className="shopInfo__middle">
 					<div className="shopInfo__middleLeft">
-						<div className="shopInfo__shopName">
-							院落创意菜
-						</div>
+						<div className="shopInfo__shopName">院落创意菜</div>
 						<div className="shopInfo__starsWrapper">
-              <span className="shopInfo__stars">
-              <i className="shopInfo__stars--red" style={{"width": "100%"}}></i>
-              </span>
+							<span className="shopInfo__stars">
+								<i className="shopInfo__stars--red" style={{width: "100%"}}></i>
+							</span>
 							<span className="shopInfo__distance">>100km</span>
 						</div>
 					</div>

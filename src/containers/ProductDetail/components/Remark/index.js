@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./style.css";
 
 class Remark extends Component {
@@ -24,9 +24,7 @@ class Remark extends Component {
 					</dl>
 					<dl className="remark__item">
 						<dt className="remark__itemTitle">预约提醒</dt>
-						<dd className="remark__itemDesc">
-							无需预约，消费高峰时可能需要等位
-						</dd>
+						<dd className="remark__itemDesc">无需预约，消费高峰时可能需要等位</dd>
 					</dl>
 					<dl className="remark__item">
 						<dt className="remark__itemTitle">规则提醒</dt>

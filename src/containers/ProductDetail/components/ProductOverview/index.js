@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./style.css";
 
 class ProductOverview extends Component {
@@ -15,9 +15,7 @@ class ProductOverview extends Component {
 					</div>
 					<div className="productOverview__baseInfo">
 						<div className="productOverview__title">院落创意菜</div>
-						<div className="productOverview__content">
-							仅售19.9元！价值48元的百香果（冷饮）1扎，提供免费WiFi。
-						</div>
+						<div className="productOverview__content">仅售19.9元！价值48元的百香果（冷饮）1扎，提供免费WiFi。</div>
 					</div>
 				</div>
 				<div className="productOverview__purchase">
