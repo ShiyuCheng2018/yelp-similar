@@ -6,6 +6,7 @@ import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
 import {getProductDetail, schema as productSchema} from "./entities/products";
 import {getShopById, schema as shopSchema} from "./entities/shops";
+import {combineReducers} from "redux";
 
 export const types = {
 	FETCH_PRODUCT_DETAIL_REQUEST: "DETAIL/FETCH_PRODUCT_DETAIL_REQUEST",
@@ -87,8 +88,36 @@ const fetchShopSuccess = (id) => ({
 	type: types.FETCH_SHOP_SUCCESS,
 });
 
-const reducer = (state = {}, action) => {
-	return state;
+/***********************************************************************************************************************
+ * 													REDUCERS   														   *
+ * *********************************************************************************************************************/
+
+const product = (state = initialState.product, action) => {
+	switch (action.types) {
+		case types.FETCH_PRODUCT_DETAIL_REQUEST:
+			return {...state, isFetching: true};
+		case types.FETCH_PRODUCT_DETAIL_SUCCESS:
+			return {...state, id: action.id, isFetching: false};
+		case types.FETCH_PRODUCT_DETAIL_FAILURE:
+			return {...state, isFetching: false, id: null};
+		default:
+			return state;
+	}
 };
+
+const relatedShop = (state = initialState.relatedShop, action) => {
+	switch (action.types) {
+		case types.FETCH_SHOP_REQUEST:
+			return {...state, isFetching: true};
+		case types.FETCH_SHOP_SUCCESS:
+			return {...state, id: action.id, isFetching: false};
+		case types.FETCH_SHOP_FAILURE:
+			return {...state, isFetching: false, id: null};
+		default:
+			return state;
+	}
+};
+
+const reducer = combineReducers({product, relatedShop});
 
 export default reducer;
