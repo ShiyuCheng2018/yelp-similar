@@ -15,6 +15,20 @@ export const params = {
 	PAGE_SIZE_DISCOUNTS: 3,
 };
 
+export const types = {
+	FETCH_LIKES_REQUEST: "HOME/FETCH_LIKES_REQUEST",
+	FETCH_LIKES_SUCCESS: "HOME/FETCH_LIKES_SUCCESS",
+	FETCH_LIKES_FAILURE: "HOME/FETCH_LIKES_FAILURE",
+
+	FETCH_DISCOUNTS_REQUEST: "HOME/DISCOUNTS_REQUEST",
+	FETCH_DISCOUNTS_SUCCESS: "HOME/DISCOUNTS_SUCCESS",
+	FETCH_DISCOUNTS_FAILURE: "HOME/DISCOUNTS_FAILURE",
+};
+
+/***********************************************************************************************************************
+ * 													STATE   														   *
+ * *********************************************************************************************************************/
+
 const initialState = {
 	likes: {
 		isFetching: false,
@@ -25,16 +39,6 @@ const initialState = {
 		isFetching: false,
 		ids: [],
 	},
-};
-
-export const types = {
-	FETCH_LIKES_REQUEST: "HOME/FETCH_LIKES_REQUEST",
-	FETCH_LIKES_SUCCESS: "HOME/FETCH_LIKES_SUCCESS",
-	FETCH_LIKES_FAILURE: "HOME/FETCH_LIKES_FAILURE",
-
-	FETCH_DISCOUNTS_REQUEST: "HOME/DISCOUNTS_REQUEST",
-	FETCH_DISCOUNTS_SUCCESS: "HOME/DISCOUNTS_SUCCESS",
-	FETCH_DISCOUNTS_FAILURE: "HOME/DISCOUNTS_FAILURE",
 };
 
 /***********************************************************************************************************************

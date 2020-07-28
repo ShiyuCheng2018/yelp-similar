@@ -15,4 +15,13 @@ export const schema = {
 
 const reducer = createReducer(schema.name);
 
+/***********************************************************************************************************************
+ * 													SELECT  														   *
+ * *********************************************************************************************************************/
+
+export const getProductDetail = (state, id) => {
+	const product = state.entities.products[id];
+	return product && product.detail && product.purchaseNotes ? product : null;
+};
+
 export default reducer;
