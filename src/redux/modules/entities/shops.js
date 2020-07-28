@@ -26,8 +26,7 @@ const reducer = createReducer(schema.name);
  * *********************************************************************************************************************/
 
 export const getShopById = (state, id) => {
-	const shop = state.entities.shops[id];
-	return shop;
+	return state.entities.shops[id];
 };
 
 export default reducer;

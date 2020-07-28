@@ -4,7 +4,7 @@
 
 import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
-import {getProductDetail, schema as productSchema} from "./entities/products";
+import {getProductById, getProductDetail, schema as productSchema} from "./entities/products";
 import {getShopById, schema as shopSchema} from "./entities/shops";
 import {combineReducers} from "redux";
 
@@ -54,7 +54,7 @@ export const actions = {
 			if (shop) {
 				return dispatch(fetchShopSuccess(id));
 			}
-			const endpoint = url.getProductDetail(id);
+			const endpoint = url.getShopById(id);
 			return dispatch(fetchShopById(endpoint, id));
 		};
 	},
@@ -121,3 +121,20 @@ const relatedShop = (state = initialState.relatedShop, action) => {
 const reducer = combineReducers({product, relatedShop});
 
 export default reducer;
+
+/***********************************************************************************************************************
+ * 													SELECTORS 														   *
+ * *********************************************************************************************************************/
+
+export const getProduct = (state, id) => {
+	return getProductDetail(state, id);
+};
+
+export const getRelatedShop = (state, productId) => {
+	const product = getProductById(state, productId);
+	let shopId = product ? product.nearestShop : null;
+	if (shopId) {
+		return getShopById(state, shopId);
+	}
+	return null;
+};

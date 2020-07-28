@@ -1,9 +1,16 @@
 import React, {Component} from "react";
 import "./style.css";
+import {Link} from "react-router-dom";
 
 class Index extends Component {
 	render() {
-		return <a className="buyButton">立即购买</a>;
+		const {productId} = this.props;
+
+		return (
+			<Link to={`/purchase/${productId}`} className="buyButton">
+				立即购买
+			</Link>
+		);
 	}
 }
 
