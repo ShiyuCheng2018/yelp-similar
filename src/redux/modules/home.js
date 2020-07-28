@@ -52,9 +52,9 @@ export const actions = {
 	},
 	loadDiscounts: () => {
 		return (dispatch, getState) => {
-			const {ids} = getState().home.discounts
-			if(ids.length > 0){
-				return null
+			const {ids} = getState().home.discounts;
+			if (ids.length > 0) {
+				return null;
 			}
 			const endpoint = url.getProductList(params.PATH_DISCOUNTS, 0, params.PAGE_SIZE_DISCOUNTS);
 			return dispatch(fetchDiscounts(endpoint));

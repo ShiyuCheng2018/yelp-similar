@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import ErrorToast from "../../components/ErrorToast";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {actions as appActions, getError} from "../../redux/modules/app";
 import "./style.css";
 import Home from "../Home";
@@ -27,7 +28,12 @@ class App extends Component {
 
 		return (
 			<div className={"App"}>
-				<Home />
+				<Router>
+					<Switch>
+						<Route path={"/"} component={Home} />
+					</Switch>
+				</Router>
+
 				{error ? <ErrorToast msg={error} clearError={clearError} /> : null}
 			</div>
 		);

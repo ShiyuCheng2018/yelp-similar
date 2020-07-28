@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import "./style.css";
+import {Link} from "react-router-dom";
 
 class Discount extends Component {
 	render() {
@@ -14,7 +15,7 @@ class Discount extends Component {
 				<div className="discount__content">
 					{data.map((item, index) => {
 						return (
-							<a key={item.id} className="discount__item" href={""}>
+							<Link to={`/detail/${item.id}`} key={item.id} className="discount__item" href={""}>
 								<div className="discount__itemPic">
 									<img width="100%" height="100%" src={item.picture} alt={"img"} />
 								</div>
@@ -23,7 +24,7 @@ class Discount extends Component {
 									<ins className="discount__itemCurrentPrice">{item.currentPrice}</ins>
 									<del className="discount__itemOldPrice">{item.oldPrice}</del>
 								</div>
-							</a>
+							</Link>
 						);
 					})}
 				</div>

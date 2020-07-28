@@ -22,13 +22,13 @@ class LikeList extends Component {
 	};
 
 	componentDidMount() {
-		if(this.props.pageCount < 3){
+		if (this.props.pageCount < 3) {
 			document.addEventListener("scroll", this.handleScroll);
-		}else {
-			this.removeListener = true
+		} else {
+			this.removeListener = true;
 		}
 
-		if(this.props.pageCount === 0){
+		if (this.props.pageCount === 0) {
 			this.props.fetchData();
 		}
 	}
