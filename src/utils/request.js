@@ -9,7 +9,7 @@ function get(url) {
 		header: header,
 	})
 		.then((res) => {
-			handleResponse(res, url);
+			return handleResponse(res, url);
 		})
 		.catch((err) => {
 			console.error(`Request failed. URL= ${url}`);
@@ -24,7 +24,7 @@ function post(url, data) {
 		body: data,
 	})
 		.then((res) => {
-			handleResponse(res, url);
+			return handleResponse(res, url);
 		})
 		.catch((err) => {
 			console.error(`Request failed. URL= ${url}`);

@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
-import rootReducer from "./modules";
 import api from "./middlewares/api";
+import rootReducer from "./modules";
 
 let store;
 

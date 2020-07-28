@@ -1,6 +1,6 @@
 import {get} from "../../utils/request";
 
-// needs to be done by middleware
+//经过中间件处理的action所具有的标识
 export const FETCH_DATA = "FETCH_DATA";
 
 export default (store) => (next) => (action) => {
@@ -11,16 +11,16 @@ export default (store) => (next) => (action) => {
 
 	const {endpoint, schema, types} = callAPI;
 	if (typeof endpoint !== "string") {
-		throw new Error("Endpoint has to be a string URL");
+		throw new Error("endpoint必须为字符串类型的URL");
 	}
 	if (!schema) {
-		throw Error("It has to have a entities' schema");
+		throw new Error("必须指定领域实体的schema");
 	}
 	if (!Array.isArray(types) && types.length !== 3) {
-		throw new Error("It needs to have an array that has three actions");
+		throw new Error("需要指定一个包含了3个action type的数组");
 	}
 	if (!types.every((type) => typeof type === "string")) {
-		throw new Error("Action has to be string type");
+		throw new Error("action type必须为字符串类型");
 	}
 
 	const actionWith = (data) => {
@@ -30,36 +30,39 @@ export default (store) => (next) => (action) => {
 	};
 
 	const [requestType, successType, failureType] = types;
-	next(actionWith({type: requestType}));
 
-	return fetchData(endpoint, schema).then((response) =>
-		next(
-			actionWith({
-				type: successType,
-				response,
-			}),
-			(error) =>
-				next(
-					actionWith({
-						type: failureType,
-						error: error.message || "fetch data failed",
-					})
-				)
-		)
+	next(actionWith({type: requestType}));
+	return fetchData(endpoint, schema).then(
+		(response) =>
+			next(
+				actionWith({
+					type: successType,
+					response,
+				})
+			),
+		(error) =>
+			next(
+				actionWith({
+					type: failureType,
+					error: error.message || "获取数据失败",
+				})
+			)
 	);
 };
 
-// educate requests
+//执行网络请求
 const fetchData = (endpoint, schema) => {
 	return get(endpoint).then((data) => {
+		console.log("normalizeData: ", normalizeData(data, schema));
 		return normalizeData(data, schema);
 	});
 };
 
+//根据schema, 将获取的数据扁平化处理
 const normalizeData = (data, schema) => {
 	const {id, name} = schema;
 	let kvObj = {};
-	let ids = {};
+	let ids = [];
 	if (Array.isArray(data)) {
 		data.forEach((item) => {
 			kvObj[item[id]] = item;

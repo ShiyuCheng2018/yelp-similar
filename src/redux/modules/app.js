@@ -19,11 +19,12 @@ const reducer = (state = initialState, action) => {
 	} else if (error) {
 		return {...state, error: error};
 	}
-
 	return state;
 };
 
-// selectors
+/***********************************************************************************************************************
+ * 													SELECTORS 														   *
+ * *********************************************************************************************************************/
 
 export const getError = (state) => {
 	return state.app.error;

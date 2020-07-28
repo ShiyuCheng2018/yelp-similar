@@ -83,7 +83,7 @@ const likes = (state = initialState.likes, action) => {
 		case types.FETCH_LIKES_REQUEST:
 			return {...state, isFetching: true};
 		case types.FETCH_LIKES_SUCCESS:
-			return {...state, isFetching: false, pageCount: state.pageCount + 1, ids: state.ids.concat(action.response.id)};
+			return {...state, isFetching: false, pageCount: state.pageCount + 1, ids: state.ids.concat(action.response.ids)};
 		case types.FETCH_LIKES_FAILURE:
 			return {...state, isFetching: false};
 		default:
@@ -96,7 +96,7 @@ const discounts = (state = initialState.discounts, action) => {
 		case types.FETCH_DISCOUNTS_REQUEST:
 			return {...state, isFetching: true};
 		case types.FETCH_DISCOUNTS_SUCCESS:
-			return {...state, isFetching: false, ids: state.ids.concat(action.response.id)};
+			return {...state, isFetching: false, ids: state.ids.concat(action.response.ids)};
 		case types.FETCH_DISCOUNTS_FAILURE:
 			return {...state, isFetching: false};
 		default:
@@ -107,3 +107,23 @@ const discounts = (state = initialState.discounts, action) => {
 const reducer = combineReducers({discounts, likes});
 
 export default reducer;
+
+/***********************************************************************************************************************
+ * 													SELECTORS 														   *
+ * *********************************************************************************************************************/
+
+export const getLikes = (state) => {
+	console.log(state);
+	return state.home.likes.ids.map((id) => {
+		return state.entities.products[id];
+	});
+};
+export const getDiscounts = (state) => {
+	return state.home.discounts.ids.map((id) => {
+		return state.entities.products[id];
+	});
+};
+
+export const getPageCountOfLikes = (state) => {
+	return state.home.likes.pageCount;
+};
