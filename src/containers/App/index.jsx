@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {actions as appActions, getError} from "../../redux/modules/app";
 import "./style.css";
 import Home from "../Home";
+import ProductDetail from "../ProductDetail";
 
 const mapStateToProps = (state, props) => {
 	return {
@@ -30,7 +31,8 @@ class App extends Component {
 			<div className={"App"}>
 				<Router>
 					<Switch>
-						<Route path={"/"} component={Home} />
+						<Route exact path={"/"} component={Home} />
+						<Route exact path={"/detail/:id"} component={ProductDetail} />
 					</Switch>
 				</Router>
 
