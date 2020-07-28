@@ -1,5 +1,24 @@
-const reducer = (state = {}, action) => {
-	return state;
+/***********************************************************************************************************************
+ * 													SCHEMA 														   *
+ * *********************************************************************************************************************/
+import createReducer from "../../../utils/createReducer";
+
+const schema = {
+	name: "shops",
+	id: "id",
 };
+
+/***********************************************************************************************************************
+ * 													REDUCERS 														   *
+ * *********************************************************************************************************************/
+
+// const reducer = (state = {}, action) => {
+// 	if(action.response && action.response.products){
+// 		return {...state, ...action.response.products}
+// 	}
+// 	return state;
+// };
+
+const reducer = createReducer(schema.name);
 
 export default reducer;
