@@ -1,68 +1,52 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## React仿大众点评WebApp开发
+> 本次使用React与webpack构建工具来做这个项目的开发，数据存储方面用到了react+redux结合来实现，在开发中运用了木偶组件、智能组件的开发理念。
+#### 技术栈
+> React + react-router + duck redux + ES6 + sass + webpack + fetch
+#### 下载
+> git clone 
+cd yelp-similar
+npm install
 
-## Available Scripts
+#### 运行
+> npm run dev (开发环境)  
+  npm run mock (开启后端数据接口)
+  访问 http://127.0.0.1:8080  
+  npm run build (生产环境)
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+#### 项目文件结构
+<pre>
+├── app                   业务代码目录
+  ├── actions             定义Redux的各个action  
+  ├── components          木偶组件  
+  ├── constants           定义Redux中用到的各个常量  
+  ├── containers          智能组件  
+  ├── config              项目配置  
+  ├── static              静态资源
+  ├── fetch               项目中获取、提交数据的方法
+  ├── router              设置路由  
+  ├── reducers            定义 Redux 的全局 store 对象
+  ├── store               创建store  
+  ├── util                工具函数
+  ├── index.js            入口文件
+  ├── index.tpl.html      模板文件
+├── build                 webpack打包编译后的文件
+  ├── css
+  ├── js
+  ├── bundle.js
+  ├── index.html
+├── mock                  后端数据模拟
+  ├── detail              详情页
+  ├── home                首页
+  ├── orderlist           订单列表页
+  ├── search              搜索结果页
+  ├── server.js           后端启动文件
+├── package.js
+├── .babelrc              设置转码的规则和插件
+├── webpack.config.js     开发环境配置
+├── webpack.server.js     生产环境配置
+</pre>
+#### 效果预览
+![首页](./Img/home.png)
+![城市页](./Img/city.png)
+![登录页](./Img/login.png)
+![详情页](./Img/detail.png)
