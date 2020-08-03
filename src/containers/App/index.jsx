@@ -7,6 +7,7 @@ import {actions as appActions, getError} from "../../redux/modules/app";
 import "./style.css";
 import Home from "../Home";
 import ProductDetail from "../ProductDetail";
+import Search from "../Search";
 
 const mapStateToProps = (state, props) => {
 	return {
@@ -32,6 +33,7 @@ class App extends Component {
 				<Router>
 					<Switch>
 						<Route exact path={"/"} component={Home} />
+						<Route path="/search" component={Search} />
 						<Route exact path={"/detail/:id"} component={ProductDetail} />
 					</Switch>
 				</Router>
