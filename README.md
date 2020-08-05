@@ -1,19 +1,26 @@
-## React仿大众点评WebApp开发
-> 本次使用React与webpack构建工具来做这个项目的开发，数据存储方面用到了react+redux结合来实现，在开发中运用了木偶组件、智能组件的开发理念。
+## React 仿大众点评 WebApp 开发
+
+> 本次使用 React 与 webpack 构建工具来做这个项目的开发，数据存储方面用到了 react+redux 结合来实现，在开发中运用了木偶组件、智能组件的开发理念。
+
 #### 技术栈
+
 > React + react-router + duck redux + ES6 + sass + webpack + fetch
+
 #### 下载
-> git clone 
-cd yelp-similar
-npm install
+
+> git clone
+> cd yelp-similar
+> npm install
 
 #### 运行
+
 > npm run dev (开发环境)  
-  npm run mock (开启后端数据接口)
-  访问 http://127.0.0.1:8080  
-  npm run build (生产环境)
+>  npm run mock (开启后端数据接口)
+> 访问 http://127.0.0.1:8080  
+>  npm run build (生产环境)
 
 #### 项目文件结构
+
 <pre>
 ├── app                   业务代码目录
   ├── actions             定义Redux的各个action  
@@ -45,7 +52,9 @@ npm install
 ├── webpack.config.js     开发环境配置
 ├── webpack.server.js     生产环境配置
 </pre>
+
 #### 效果预览
+
 ![首页](./Img/home.png)
 ![城市页](./Img/city.png)
 ![登录页](./Img/login.png)
