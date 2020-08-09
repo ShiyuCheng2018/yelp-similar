@@ -3,6 +3,7 @@ import entities from "./entities";
 import home from "./home";
 import detail from "./detail";
 import app from "./app";
+import search from "./search";
 
 // combine all reducers
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
 	home,
 	detail,
 	app,
+	search,
 });
 
 export default rootReducer;
