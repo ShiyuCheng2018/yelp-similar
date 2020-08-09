@@ -20,7 +20,7 @@ export const types = {
 	CLEAR_INPUT_TEXT: "SEARCH/CLEAR_INPUT_TEXT",
 
 	ADD_HISTORY_KEYWORD: "SEARCH/ADD_HISTORY_KEYWORD",
-	CLEAR_HISTORY_KEYWORDS: "SEARCH/ADD_HISTORY_KEYWORD",
+	CLEAR_HISTORY_KEYWORDS: "SEARCH/CLEAR_HISTORY_KEYWORD",
 };
 
 /***********************************************************************************************************************
@@ -74,7 +74,7 @@ export const actions = {
 		text,
 	}),
 	clearInputText: () => ({
-		type: types.CLEAR_HISTORY_KEYWORDS,
+		type: types.CLEAR_INPUT_TEXT,
 	}),
 	addHistoryKeyword: (keywordId) => ({
 		type: types.ADD_HISTORY_KEYWORD,
@@ -189,16 +189,17 @@ export const getPopularKeywords = (state) => {
 };
 
 export const getRelatedKeywords = (state) => {
-	const text = state.search.inputBuffer;
+	const text = state.search.inputText;
 	if (!text || text.trim().length === 0) {
 		return [];
 	}
 	const relatedKeywords = state.search.relatedKeywords[text];
+
 	if (!relatedKeywords) {
 		return [];
 	}
 	return relatedKeywords.ids.map((id) => {
-		return getKeywordById(id);
+		return getKeywordById(state, id);
 	});
 };
 

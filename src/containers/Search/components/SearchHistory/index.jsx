@@ -2,22 +2,16 @@ import React, {Component} from "react";
 import "./style.css";
 
 class SearchHistory extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			data: ["烤鸭", "火锅", "面条"],
-		};
-	}
-
 	render() {
+		const {data} = this.props;
 		return (
 			<div className="searchHistory">
 				<div className="searchHistory__header">搜索记录</div>
 				<ul className="searchHistory__list">
-					{this.state.data.map((item, index) => {
+					{data.map((item) => {
 						return (
-							<li key={index} onClick={this.handleClick} className="searchHistory__item">
-								{item}
+							<li key={item.id} onClick={this.handleClick.bind(this, item)} className="searchHistory__item">
+								{item.keyword}
 							</li>
 						);
 					})}
@@ -29,12 +23,12 @@ class SearchHistory extends Component {
 		);
 	}
 
-	handleClick = () => {};
+	handleClick = (item) => {
+		this.props.onClickItem(item);
+	};
 
 	handleClear = () => {
-		this.setState({
-			data: [],
-		});
+		this.props.onClear();
 	};
 }
 
