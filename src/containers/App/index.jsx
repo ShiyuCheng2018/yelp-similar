@@ -8,6 +8,7 @@ import "./style.css";
 import Home from "../Home";
 import ProductDetail from "../ProductDetail";
 import Search from "../Search";
+import SearchResult from "../SearchResult";
 
 const mapStateToProps = (state, props) => {
 	return {
@@ -32,9 +33,10 @@ class App extends Component {
 			<div className={"App"}>
 				<Router>
 					<Switch>
-						<Route exact path={"/"} component={Home} />
 						<Route path="/search" component={Search} />
+						<Route path="/search_result" component={SearchResult} />
 						<Route exact path={"/detail/:id"} component={ProductDetail} />
+						<Route exact path={"/"} component={Home} />
 					</Switch>
 				</Router>
 
