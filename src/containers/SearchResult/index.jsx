@@ -6,7 +6,6 @@ import Banner from "../../components/Banner";
 import {getCurrentKeyword, getSearchShops} from "../../redux/modules/search";
 import {connect} from "react-redux";
 
-
 class SearchResult extends Component {
 	render() {
 		const {shops, currentKeyword} = this.props;

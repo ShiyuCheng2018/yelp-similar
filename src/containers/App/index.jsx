@@ -9,6 +9,7 @@ import Home from "../Home";
 import ProductDetail from "../ProductDetail";
 import Search from "../Search";
 import SearchResult from "../SearchResult";
+import Login from "../Login";
 
 const mapStateToProps = (state, props) => {
 	return {
@@ -34,6 +35,7 @@ class App extends Component {
 				<Router>
 					<Switch>
 						<Route path="/search" component={Search} />
+						<Route exact path={"/user"} component={Login} />
 						<Route path="/search_result" component={SearchResult} />
 						<Route exact path={"/detail/:id"} component={ProductDetail} />
 						<Route exact path={"/"} component={Home} />
