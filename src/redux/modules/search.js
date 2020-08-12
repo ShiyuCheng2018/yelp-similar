@@ -1,7 +1,7 @@
 import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
 import {getKeywordById, schema as keywordSchema} from "../modules/entities/keywords";
-import {schema as shopSchema} from "./entities/shops";
+import {getShopById, schema as shopSchema} from "./entities/shops";
 import {combineReducers} from "redux";
 
 /***********************************************************************************************************************
@@ -157,7 +157,7 @@ const relatedKeywords = (state = initialState.relatedKeywords, action) => {
 			return state;
 	}
 };
-const searchShopsByKeyword = (state = initialState.searchedShopsByKeyword, action) => {
+const searchedShopsByKeyword = (state = initialState.searchedShopsByKeyword, action) => {
 	switch (action.type) {
 		case types.FETCH_SHOPS_REQUEST:
 		case types.FETCH_SHOPS_SUCCESS:
@@ -228,7 +228,7 @@ export default combineReducers({
 	relatedKeywords,
 	inputText,
 	historyKeywords,
-	searchShopsByKeyword,
+	searchedShopsByKeyword,
 });
 /***********************************************************************************************************************
  * 													SELECTORS 														   *
@@ -263,4 +263,23 @@ export const getHistoryKeywords = (state) => {
 	return state.search.historyKeywords.map((id) => {
 		return getKeywordById(state, id);
 	});
+};
+
+export const getSearchShops = (state) => {
+	const keywordId = state.search.historyKeywords[0];
+	if (!keywordId) {
+		return [];
+	}
+	const shops = state.search.searchedShopsByKeyword[keywordId];
+	return shops.ids.map((id) => {
+		return getShopById(state, id);
+	});
+};
+
+export const getCurrentKeyword = (state) => {
+	const keywordId = state.search.historyKeywords[0];
+	if (!keywordId) {
+		return "";
+	}
+	return getKeywordById(state, keywordId).keyword;
 };

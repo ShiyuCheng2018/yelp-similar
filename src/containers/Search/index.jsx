@@ -47,10 +47,11 @@ class Search extends Component {
 	};
 
 	handleClickItem = (item) => {
-		const {setInputText, addHistoryKeyword} = this.props.searchActions;
+		const {setInputText, addHistoryKeyword, loadRelatedShops} = this.props.searchActions;
 		setInputText(item.keyword);
 		addHistoryKeyword(item.id);
-		//TODO: dump to search result
+		loadRelatedShops(item.id);
+		this.props.history.push("/search_result");
 	};
 
 	handleClearHistory = () => {
