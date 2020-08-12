@@ -1,6 +1,7 @@
 import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
 import {getKeywordById, schema as keywordSchema} from "../modules/entities/keywords";
+import {schema as shopSchema} from "./entities/shops";
 import {combineReducers} from "redux";
 
 /***********************************************************************************************************************
@@ -15,6 +16,10 @@ export const types = {
 	FETCH_RELATED_KEYWORDS_REQUEST: "FETCH_RELATED_KEYWORDS_REQUEST",
 	FETCH_RELATED_KEYWORDS_SUCCESS: "FETCH_RELATED_KEYWORDS_SUCCESS",
 	FETCH_RELATED_KEYWORDS_FAILURE: "FETCH_RELATED_KEYWORDS_FAILURE",
+
+	FETCH_SHOPS_REQUEST: "FETCH_SHOPS_REQUEST",
+	FETCH_SHOPS_SUCCESS: "FETCH_SHOPS_SUCCESS",
+	FETCH_SHOPS_FAILURE: "FETCH_SHOPS_FAILURE",
 
 	SET_INPUT_TEXT: "SEARCH/SET_INPUT_TEXT",
 	CLEAR_INPUT_TEXT: "SEARCH/CLEAR_INPUT_TEXT",
@@ -43,6 +48,7 @@ const initialState = {
 	 * */
 	relatedKeywords: {},
 	historyKeywords: [],
+	searchedShopsByKeyword: {},
 };
 
 /***********************************************************************************************************************
@@ -67,6 +73,16 @@ export const actions = {
 			}
 			const endpoint = url.getRelatedKeywords(text);
 			return dispatch(fetchRelatedKeywords(text, endpoint));
+		};
+	},
+	loadRelatedShops: (keyword) => {
+		return (dispatch, getState) => {
+			const {searchedShopsByKeyword} = getState().search;
+			if (searchedShopsByKeyword[keyword]) {
+				return null;
+			}
+			const endpoint = url.getRelatedShops(keyword);
+			return dispatch(fetchRelatedShops(keyword, endpoint));
 		};
 	},
 	setInputText: (text) => ({
@@ -102,6 +118,15 @@ const fetchRelatedKeywords = (text, endpoint) => ({
 	text,
 });
 
+const fetchRelatedShops = (text, endpoint) => ({
+	[FETCH_DATA]: {
+		types: [types.FETCH_SHOPS_REQUEST, types.FETCH_SHOPS_SUCCESS, types.FETCH_SHOPS_FAILURE],
+		endpoint,
+		schema: shopSchema,
+	},
+	text,
+});
+
 /***********************************************************************************************************************
  * 													REDUCERS 														   *
  * *********************************************************************************************************************/
@@ -132,6 +157,19 @@ const relatedKeywords = (state = initialState.relatedKeywords, action) => {
 			return state;
 	}
 };
+const searchShopsByKeyword = (state = initialState.searchedShopsByKeyword, action) => {
+	switch (action.type) {
+		case types.FETCH_SHOPS_REQUEST:
+		case types.FETCH_SHOPS_SUCCESS:
+		case types.FETCH_SHOPS_FAILURE:
+			return {
+				...state,
+				[action.text]: searchShops(state[action.text], action),
+			};
+		default:
+			return state;
+	}
+};
 
 const relatedKeywordsByText = (state = {isFetching: false, ids: []}, action) => {
 	switch (action.type) {
@@ -140,6 +178,19 @@ const relatedKeywordsByText = (state = {isFetching: false, ids: []}, action) => 
 		case types.FETCH_RELATED_KEYWORDS_SUCCESS:
 			return {...state, isFetching: false, ids: state.ids.concat(action.response.ids)};
 		case types.FETCH_RELATED_KEYWORDS_FAILURE:
+			return {...state, isFetching: false};
+		default:
+			return state;
+	}
+};
+
+const searchShops = (state = {isFetching: false, ids: []}, action) => {
+	switch (action.type) {
+		case types.FETCH_SHOPS_REQUEST:
+			return {...state, isFetching: true};
+		case types.FETCH_SHOPS_SUCCESS:
+			return {...state, isFetching: false, ids: action.response.ids};
+		case types.FETCH_SHOPS_FAILURE:
 			return {...state, isFetching: false};
 		default:
 			return state;
@@ -177,6 +228,7 @@ export default combineReducers({
 	relatedKeywords,
 	inputText,
 	historyKeywords,
+	searchShopsByKeyword,
 });
 /***********************************************************************************************************************
  * 													SELECTORS 														   *
