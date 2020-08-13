@@ -4,6 +4,7 @@ import home from "./home";
 import detail from "./detail";
 import app from "./app";
 import search from "./search";
+import login from "./login";
 
 // combine all reducers
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	detail,
 	app,
 	search,
+	login,
 });
 
 export default rootReducer;
