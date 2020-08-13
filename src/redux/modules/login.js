@@ -92,3 +92,15 @@ export default reducer;
 /***********************************************************************************************************************
  * 													SELECTORS 														   *
  * *********************************************************************************************************************/
+
+export const getUsername = (state) => {
+	return state.login.username;
+};
+
+export const getPassword = (state) => {
+	return state.login.password;
+};
+
+export const isLogin = (state) => {
+	return state.login.status;
+};

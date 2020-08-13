@@ -35,10 +35,10 @@ class App extends Component {
 				<Router>
 					<Switch>
 						<Route path="/search" component={Search} />
-						<Route exact path={"/user"} component={Login} />
+						<Route exact path={"/auth/login"} component={Login} />
 						<Route path="/search_result" component={SearchResult} />
 						<Route exact path={"/detail/:id"} component={ProductDetail} />
-						<Route exact path={"/"} component={Home} />
+						<Route path={"/"} component={Home} />
 					</Switch>
 				</Router>
 
