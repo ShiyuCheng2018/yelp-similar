@@ -15,10 +15,10 @@ export const types = {
  * 													STATE   														   *
  * *********************************************************************************************************************/
 const initialState = {
-	username: "",
+	username: localStorage.getItem("username") || "",
 	password: "",
 	isFetching: false,
-	status: false, // login flag
+	status: localStorage.getItem("login") || false, // login flag
 };
 
 /***********************************************************************************************************************
@@ -35,14 +35,18 @@ export const actions = {
 			dispatch(loginRequest());
 			return new Promise((resolve, reject) => {
 				setTimeout(() => {
+					localStorage.setItem("username", username);
+					localStorage.setItem("login", true);
 					resolve(dispatch(loginSuccess()));
 				}, 1000);
 			});
 		};
 	},
-	logout: () => ({
-		type: types.LOGOUT,
-	}),
+	logout: () => {
+		localStorage.removeItem("username");
+		localStorage.removeItem("login");
+		return {type: types.LOGOUT};
+	},
 	setUsername: (username) => ({
 		type: types.SET_USERNAME,
 		username,
