@@ -7,14 +7,14 @@ class UserHeader extends Component {
 		return (
 			<header className="userHeader">
 				<div className="userHeader__back" onClick={onBack}>
-					首页
+					HOME
 				</div>
 				<div className="userHeader__list">
-					<span className="userHeader__item userHeader__item--selected">订单</span>
-					<span className="userHeader__item">抵用券</span>
+					<span className="userHeader__item userHeader__item--selected">ORDERS</span>
+					<span className="userHeader__item">COUPONS</span>
 				</div>
 				<div className="userHeader__right" onClick={onLogout}>
-					注销
+					EXIT
 				</div>
 			</header>
 		);

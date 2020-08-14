@@ -34,8 +34,8 @@ class UserMain extends Component {
 		return (
 			<div className="userMain__empty">
 				<div className="userMain__emptyIcon" />
-				<div className="userMain__emptyText1">您还没有相关订单</div>
-				<div className="userMain__emptyText2">去逛逛看有哪些想买的</div>
+				<div className="userMain__emptyText1">You don't have any order</div>
+				<div className="userMain__emptyText2">Back to home, see what you like</div>
 			</div>
 		);
 	};
