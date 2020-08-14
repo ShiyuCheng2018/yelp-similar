@@ -1,6 +1,6 @@
 import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
-import {AVAILABLE_TYPE, REFUND_TYPE, schema, TO_PAY_TYPE} from "./entities/orders";
+import {AVAILABLE_TYPE, getOrderById, REFUND_TYPE, schema, TO_PAY_TYPE} from "./entities/orders";
 import {combineReducers} from "redux";
 
 /***********************************************************************************************************************
@@ -81,23 +81,30 @@ const orders = (state = initialState.orders, action) => {
 	}
 };
 
-const currentTab = (state=initialState.currentTab, action) => {
-	switch(action.type){
+const currentTab = (state = initialState.currentTab, action) => {
+	switch (action.type) {
 		case types.SET_CURRENT_TAB:
-			return action.index
+			return action.index;
 		default:
 			return state;
 	}
-}
+};
 
 const reducer = combineReducers({
 	currentTab,
-	orders
-})
+	orders,
+});
 
 export default reducer;
-
 
 /***********************************************************************************************************************
  * 													SELECTORS 														   *
  * *********************************************************************************************************************/
+
+export const getCurrentTab = (state) => state.user.currentTab;
+export const getOrders = (state) => {
+	const key = ["ids", "toPayIds", "availableIds", "refundIds"][state.user.currentTab];
+	return state.user.orders[key].map((id) => {
+		return getOrderById(id);
+	});
+};
