@@ -8,6 +8,11 @@ export const schema = {
 	id: "id",
 };
 
+export const USED_TYPE = 1; // paid
+export const TO_PAY_TYPE = 2; // waiting for payment
+export const AVAILABLE_TYPE = 3; // available order
+export const REFUND_TYPE = 4;
+
 /***********************************************************************************************************************
  * 													REDUCERS 														   *
  * *********************************************************************************************************************/
