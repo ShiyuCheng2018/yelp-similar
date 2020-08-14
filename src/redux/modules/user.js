@@ -78,6 +78,8 @@ const orders = (state = initialState.orders, action) => {
 				availableIds: state.availableIds.concat(availableIds),
 				refundIds: state.refundIds.concat(refundIds),
 			};
+		default:
+			return state;
 	}
 };
 
@@ -105,6 +107,6 @@ export const getCurrentTab = (state) => state.user.currentTab;
 export const getOrders = (state) => {
 	const key = ["ids", "toPayIds", "availableIds", "refundIds"][state.user.currentTab];
 	return state.user.orders[key].map((id) => {
-		return getOrderById(id);
+		return getOrderById(state, id);
 	});
 };
