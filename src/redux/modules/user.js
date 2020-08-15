@@ -1,6 +1,6 @@
 import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
-import {AVAILABLE_TYPE, getOrderById, REFUND_TYPE, schema, TO_PAY_TYPE} from "./entities/orders";
+import {AVAILABLE_TYPE, getOrderById, REFUND_TYPE, schema, TO_PAY_TYPE, actions as orderActions} from "./entities/orders";
 import {combineReducers} from "redux";
 
 /***********************************************************************************************************************
@@ -11,6 +11,10 @@ export const types = {
 	FETCH_ORDERS_REQUEST: "USER/FETCH_ORDERS_REQUEST",
 	FETCH_ORDERS_SUCCESS: "USER/FETCH_ORDERS_SUCCESS",
 	FETCH_ORDERS_FAILURE: "USER/FETCH_ORDERS_FAILURE",
+
+	DELETE_ORDERS_REQUEST: "USER/DELETE_ORDERS_REQUEST",
+	DELETE_ORDERS_SUCCESS: "USER/DELETE_ORDERS_SUCCESS",
+	DELETE_ORDERS_FAILURE: "USER/\tDELETE_ORDERS_FAILURE",
 
 	SET_CURRENT_TAB: "USER/SET_CURRENT_TAB",
 };
@@ -27,6 +31,10 @@ const initialState = {
 		refundIds: [],
 	},
 	currentTab: 0,
+	currentOrder: {
+		id: null,
+		isDeleting: false,
+	},
 };
 
 /***********************************************************************************************************************
@@ -48,7 +56,30 @@ export const actions = {
 		type: types.SET_CURRENT_TAB,
 		index,
 	}),
+	removeOrder: () => {
+		return (dispatch, getState) => {
+			const {id} = getState().user.currentOrder;
+			if (id) {
+				dispatch(deleteOrderRequest());
+				return new Promise((resolve, reject) => {
+					setTimeout(() => {
+						dispatch(orderActions.deleteOrder(id));
+						resolve(dispatch(deleteOrderSuccess(id)));
+					}, 500);
+				});
+			}
+		};
+	},
 };
+
+const deleteOrderRequest = () => ({
+	type: types.DELETE_ORDERS_REQUEST,
+});
+
+const deleteOrderSuccess = (orderId) => ({
+	type: types.DELETE_ORDERS_SUCCESS,
+	orderId,
+});
 
 const fetchOrders = (endpoint) => ({
 	[FETCH_DATA]: {
