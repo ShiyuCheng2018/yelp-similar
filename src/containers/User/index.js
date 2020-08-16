@@ -1,18 +1,18 @@
 import React, {Component} from "react";
-import UserMain from "./components/UserMain";
+import UserMain from "./containers/UserMain";
 import UserHeader from "./components/UserHeader";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {actions as userActions, getAllOrders, getCurrentTab, getOrders} from "../../redux/modules/user";
+import {actions as userActions, getCurrentTab, getOrders} from "../../redux/modules/user";
 import {actions as authActions} from "../../redux/modules/login";
 
 class User extends Component {
 	render() {
-		const {currentTab, orders} = this.props;
+		const {orders} = this.props;
 		return (
 			<div>
 				<UserHeader onBack={this.handleBack} onLogout={this.handleLogout} />
-				<UserMain currentTab={currentTab} data={orders} onSetCurrentTab={this.handleCurrentTab} />
+				<UserMain data={orders} />
 			</div>
 		);
 	}
@@ -20,10 +20,6 @@ class User extends Component {
 	componentDidMount() {
 		this.props.userActions.loadOrders();
 	}
-
-	handleCurrentTab = (index) => {
-		this.props.userActions.setCurrentTab(index);
-	};
 
 	handleBack = () => {
 		this.props.history.push("/");
