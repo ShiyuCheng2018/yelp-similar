@@ -19,7 +19,16 @@ export const types = {
 	SHOW_DELETE_DIALOG: "USER/SHOW_DELETE_DIALOG",
 	HIDE_DELETE_DIALOG: "USER/HIDE_DELETE_DIALOG",
 
+	SHOW_COMMENT_AREA: "USER/SHOW_COMMENT_AREA",
+	HIDE_COMMENT_AREA: "USER/HIDE_COMMENT_AREA",
+
+	SET_STARS: "USER/SET_STARS",
 	SET_CURRENT_TAB: "USER/SET_CURRENT_TAB",
+
+	SET_COMMENT: "USER/SET_COMMENT",
+	POST_COMMENT_REQUEST: "USER/POST_COMMENT_REQUEST",
+	POST_COMMENT_SUCCESS: "USER/POST_COMMENT_SUCCESS",
+	POST_COMMENT_FAILURE: "USER/POST_COMMENT_FAILURE",
 };
 
 /***********************************************************************************************************************
@@ -37,6 +46,9 @@ const initialState = {
 	currentOrder: {
 		id: null,
 		isDeleting: false,
+		isCommenting: false,
+		comment: "",
+		stars: "",
 	},
 };
 
@@ -80,7 +92,46 @@ export const actions = {
 	hideDeleteDialog: () => ({
 		type: types.HIDE_DELETE_DIALOG,
 	}),
+	showCommentArea: (orderId) => ({
+		type: types.SHOW_COMMENT_AREA,
+		orderId,
+	}),
+	hideCommentArea: () => ({
+		type: types.HIDE_COMMENT_AREA,
+	}),
+	setComment: (comment) => ({
+		type: types.SET_COMMENT,
+		comment,
+	}),
+	setStars: (stars) => ({
+		type: types.SET_STARS,
+		stars,
+	}),
+	submitComment: () => {
+		return (disptach, getState) => {
+			disptach(postCommentRequest());
+			return new Promise((resolve, reject) => {
+				setTimeout(() => {
+					const {
+						currentOrder: {id, stars, comment},
+					} = getState().user;
+					const commentObj = {
+						id: +new Date(),
+						stars,
+						content: comment,
+					};
+				}, 800);
+			});
+		};
+	},
 };
+const postCommentRequest = () => ({
+	type: types.POST_COMMENT_REQUEST,
+});
+
+const postCommentSuccess = () => ({
+	type: types.POST_COMMENT_SUCCESS,
+});
 
 const deleteOrderRequest = () => ({
 	type: types.DELETE_ORDERS_REQUEST,
