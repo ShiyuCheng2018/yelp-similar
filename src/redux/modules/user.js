@@ -1,6 +1,7 @@
 import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
 import {AVAILABLE_TYPE, getOrderById, REFUND_TYPE, schema, TO_PAY_TYPE, actions as orderActions, types as orderTypes} from "./entities/orders";
+import {actions as commentActions} from "./entities/comments";
 import {combineReducers} from "redux";
 
 /***********************************************************************************************************************
@@ -108,8 +109,8 @@ export const actions = {
 		stars,
 	}),
 	submitComment: () => {
-		return (disptach, getState) => {
-			disptach(postCommentRequest());
+		return (dispatch, getState) => {
+			dispatch(postCommentRequest());
 			return new Promise((resolve, reject) => {
 				setTimeout(() => {
 					const {
@@ -120,6 +121,10 @@ export const actions = {
 						stars,
 						content: comment,
 					};
+					dispatch(postCommentSuccess());
+					dispatch(commentActions.addComment(commentObj));
+					dispatch(orderActions.addComment(id, commentObj.id));
+					resolve();
 				}, 800);
 			});
 		};

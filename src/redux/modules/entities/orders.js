@@ -14,6 +14,7 @@ export const schema = {
 
 export const types = {
 	DELETE_ORDER: "ORDER/DELETE_ORDER",
+	ADD_COMMENT: "ORDER/ADD_COMMENT",
 };
 
 export const USED_TYPE = 1; // paid
@@ -29,6 +30,11 @@ export const actions = {
 		type: types.DELETE_ORDER,
 		orderId,
 	}),
+	addComment: (orderId, commentId) => ({
+		type: types.ADD_COMMENT,
+		orderId,
+		commentId,
+	}),
 };
 
 /***********************************************************************************************************************
@@ -38,7 +44,15 @@ export const actions = {
 const normalReducer = createReducer(schema.name);
 
 const reducer = (state = {}, action) => {
-	if (action.type === types.DELETE_ORDER) {
+	if (action.type === types.ADD_COMMENT) {
+		return {
+			...state,
+			[action.orderId]: {
+				...state[action.orderId],
+				commentId: action.commentId,
+			},
+		};
+	} else if (action.type === types.DELETE_ORDER) {
 		const {[action.orderId]: deleteOrder, ...restOrders} = state;
 		return restOrders;
 	} else {
