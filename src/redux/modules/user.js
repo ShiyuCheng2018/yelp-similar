@@ -213,10 +213,25 @@ const currentOrder = (state = initialState.currentOrder, action) => {
 				id: action.orderId,
 				isDeleting: true,
 			};
+		case types.SHOW_COMMENT_AREA:
+			return {
+				...state,
+				id: action.orderId,
+				isCommenting: true
+			}
 		case types.HIDE_DELETE_DIALOG:
+		case types.HIDE_COMMENT_AREA:
 		case types.DELETE_ORDERS_SUCCESS:
 		case types.DELETE_ORDERS_FAILURE:
+		case types.POST_COMMENT_SUCCESS:
+		case types.POST_COMMENT_FAILURE:
 			return initialState.currentOrder;
+		case types.SET_COMMENT:
+			return {
+				...state, comment: action.comment
+			}
+		case types.SET_STARS:
+			return {...state, stars: action.stars};
 		default:
 			return state;
 	}
