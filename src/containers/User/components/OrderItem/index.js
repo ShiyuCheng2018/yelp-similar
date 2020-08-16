@@ -4,7 +4,8 @@ import "./style.css";
 class OrderItem extends Component {
 	render() {
 		const {
-			data: {title, statusText, orderPicUrl, channel, text, type},
+			data: {title, statusText, orderPicUrl, channel, text, type, commentId},
+			isCommenting,
 		} = this.props;
 		return (
 			<div className="orderItem">
@@ -24,13 +25,17 @@ class OrderItem extends Component {
 				<div className="orderItem__bottom">
 					<div className="orderItem__type">{channel}</div>
 					<div>
-						{type === 1 ? <div className="orderItem__btn">Comment</div> : null}
+						{type === 1 && !commentId ? (
+							<div className="orderItem__btn" onClick={this.handleComment}>
+								Comment
+							</div>
+						) : null}
 						<div className="orderItem__btn" onClick={this.handleRemove}>
 							Delete
 						</div>
 					</div>
 				</div>
-				{this.renderEditArea()}
+				{isCommenting ? this.renderEditArea() : null}
 			</div>
 		);
 	}
@@ -38,12 +43,12 @@ class OrderItem extends Component {
 	renderEditArea() {
 		return (
 			<div className="orderItem__commentContainer">
-				<textarea className="orderItem__comment" onChange={this.handleCommentChange} value={""} />
+				<textarea className="orderItem__comment" onChange={this.handleCommentChange} value={this.props.comment} />
 				{this.renderStars()}
-				<button className="orderItem__commentBtn" onClick={null}>
+				<button className="orderItem__commentBtn" onClick={this.props.onSubmitComment}>
 					Submit
 				</button>
-				<button className="orderItem__commentBtn" onClick={null}>
+				<button className="orderItem__commentBtn" onClick={this.props.onCancelComment}>
 					Cancel
 				</button>
 			</div>
@@ -51,12 +56,13 @@ class OrderItem extends Component {
 	}
 
 	renderStars() {
+		const {stars} = this.props;
 		return (
 			<div>
 				{[1, 2, 3, 4, 5].map((item, index) => {
-					const lightClass = 3 >= item ? "orderItem__star--light" : "";
+					const lightClass = stars >= item ? "orderItem__star--light" : "";
 					return (
-						<span className={"orderItem__star " + lightClass} key={index} onClick={null}>
+						<span className={"orderItem__star " + lightClass} key={index} onClick={this.props.onStarsChange.bind(this, item)}>
 							★
 						</span>
 					);
@@ -65,7 +71,15 @@ class OrderItem extends Component {
 		);
 	}
 
-	handleCommentChange = () => {};
+	handleComment = () => {
+		const {
+			data: {id},
+		} = this.props;
+		this.props.onComment(id);
+	};
+	handleCommentChange = (e) => {
+		this.props.onCommentChange(e.target.value);
+	};
 
 	handleRemove = () => {
 		this.props.onRemove();
