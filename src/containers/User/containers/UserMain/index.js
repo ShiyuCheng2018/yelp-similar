@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {actions as userActions, getCurrentTab, getDeletingOrderId} from "../../../../redux/modules/user";
+import {actions as userActions, getCommentOrderId, getCurrentOrderComment, getCurrentOrderStars, getCurrentTab, getDeletingOrderId} from "../../../../redux/modules/user";
 import OrderItem from "../../components/OrderItem";
 import Confirm from "../../../../components/Confirm";
 import "./style.css";
@@ -30,9 +30,59 @@ class UserMain extends Component {
 	}
 
 	renderOrderList = (data) => {
+		const {commentingOrderId, orderComment, orderStars} = this.props;
 		return data.map((item) => {
-			return <OrderItem key={item.id} data={item} onRemove={this.handleRemove.bind(this, item.id)} />;
+			return (
+				<OrderItem
+					key={item.id}
+					data={item}
+					onRemove={this.handleRemove.bind(this, item.id)}
+					isCommenting={item.id === commentingOrderId}
+					comment={item.id === commentingOrderId ? orderComment : ""}
+					stars={item.id === commentingOrderId ? orderStars : 0}
+					onCommentChange={this.handleCommentChange}
+					onStarsChange={this.handleStarsChange}
+					onComment={this.handleComment.bind(this, item.id)}
+					onSubmitComment={this.handleSubmitComment}
+					onCancelComment={this.handleCancelComment}
+				/>
+			);
 		});
+	};
+
+	handleSubmitComment = () => {
+		const {
+			userActions: {submitComment},
+		} = this.props;
+		submitComment();
+	};
+
+	handleCancelComment = () => {
+		const {
+			userActions: {hideCommentArea},
+		} = this.props;
+		hideCommentArea();
+	};
+
+	handleStarsChange = (stars) => {
+		const {
+			userActions: {setStars},
+		} = this.props;
+		setStars(stars);
+	};
+
+	handleCommentChange = (comment) => {
+		const {
+			userActions: {setComment},
+		} = this.props;
+		setComment(comment);
+	};
+
+	handleComment = (orderId) => {
+		const {
+			userActions: {showCommentArea},
+		} = this.props;
+		showCommentArea(orderId);
 	};
 
 	handleRemove = (orderId) => {
@@ -69,6 +119,9 @@ const mapStateToProps = (state, props) => {
 	return {
 		currentTab: getCurrentTab(state),
 		deletingOrderId: getDeletingOrderId(state),
+		commentingOrderId: getCommentOrderId(state),
+		orderComment: getCurrentOrderComment(state),
+		orderStars: getCurrentOrderStars(state),
 	};
 };
 
