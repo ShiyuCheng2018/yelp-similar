@@ -217,8 +217,8 @@ const currentOrder = (state = initialState.currentOrder, action) => {
 			return {
 				...state,
 				id: action.orderId,
-				isCommenting: true
-			}
+				isCommenting: true,
+			};
 		case types.HIDE_DELETE_DIALOG:
 		case types.HIDE_COMMENT_AREA:
 		case types.DELETE_ORDERS_SUCCESS:
@@ -228,8 +228,9 @@ const currentOrder = (state = initialState.currentOrder, action) => {
 			return initialState.currentOrder;
 		case types.SET_COMMENT:
 			return {
-				...state, comment: action.comment
-			}
+				...state,
+				comment: action.comment,
+			};
 		case types.SET_STARS:
 			return {...state, stars: action.stars};
 		default:
@@ -256,7 +257,16 @@ export const getOrders = (state) => {
 		return getOrderById(state, id);
 	});
 };
-
 export const getDeletingOrderId = (state) => {
 	return state.user.currentOrder && state.user.currentOrder.isDeleting ? state.user.currentOrder.id : null;
+};
+export const getCommentOrderId = (state) => {
+	return state.user.currentOrder && state.user.currentOrder.isCommenting ? state.user.currentOrder.id : null;
+};
+export const getCurrentOrderComment = (state) => {
+	return state.user.currentOrder ? state.user.currentOrder.comment : "";
+};
+
+export const getCurrentOrderStars = (state) => {
+	return state.user.currentOrder ? state.user.currentOrder.stars : 0;
 };
