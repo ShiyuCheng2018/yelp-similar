@@ -12,6 +12,7 @@ import SearchResult from "../SearchResult";
 import Login from "../Login";
 import PrivateRoute from "../PrivateRoute";
 import User from "../User";
+import Purchase from "../Purchase";
 
 const mapStateToProps = (state, props) => {
 	return {
@@ -39,6 +40,7 @@ class App extends Component {
 						<Route path="/search" component={Search} />
 						<Route path={"/auth/login"} component={Login} />
 						<PrivateRoute path={"/user"} component={User} />
+						<PrivateRoute path={"/purchase/:id"} component={Purchase} />
 						<Route path="/search_result" component={SearchResult} />
 						<Route path={"/detail/:id"} component={ProductDetail} />
 						<Route path={"/"} component={Home} />
