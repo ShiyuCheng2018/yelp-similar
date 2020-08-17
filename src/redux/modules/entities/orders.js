@@ -13,8 +13,9 @@ export const schema = {
  * *********************************************************************************************************************/
 
 export const types = {
-	DELETE_ORDER: "ORDER/DELETE_ORDER",
-	ADD_COMMENT: "ORDER/ADD_COMMENT",
+	ADD_ORDER: "ORDERS/ADD_ORDER",
+	DELETE_ORDER: "ORDERS/DELETE_ORDER",
+	ADD_COMMENT: "ORDERS/ADD_COMMENT",
 };
 
 export const USED_TYPE = 1; // paid
@@ -25,7 +26,17 @@ export const REFUND_TYPE = 4;
 /***********************************************************************************************************************
  * 													ACTIONS 														   *
  * *********************************************************************************************************************/
+let orderIdCounter = 10;
+
 export const actions = {
+	addOrder: (order) => {
+		const orderId = `o-${orderIdCounter++}`;
+		return {
+			type: types.ADD_ORDER,
+			orderId,
+			order: {...order, id: orderId},
+		};
+	},
 	deleteOrder: (orderId) => ({
 		type: types.DELETE_ORDER,
 		orderId,
@@ -51,6 +62,11 @@ const reducer = (state = {}, action) => {
 				...state[action.orderId],
 				commentId: action.commentId,
 			},
+		};
+	} else if (action.type === types.ADD_ORDER) {
+		return {
+			...state,
+			[action.orderId]: action.order,
 		};
 	} else if (action.type === types.DELETE_ORDER) {
 		const {[action.orderId]: deleteOrder, ...restOrders} = state;
