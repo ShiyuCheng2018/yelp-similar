@@ -63,6 +63,21 @@ export const action = {
  * 													REDUCERS 														   *
  * *********************************************************************************************************************/
 
+const reducer = (state = initialState, action) => {
+	switch (action.type) {
+		case types.SET_ORDER_QUANTITY:
+			return {...state, quantity: action.quantity};
+		case types.CLOSE_TIP:
+			return {...state, showTip: false};
+		case types.SUBMIT_ORDER_SUCCESS:
+			return {...state, showTip: true};
+		default:
+			return state;
+	}
+};
+
+export default reducer;
+
 /***********************************************************************************************************************
  * 													SELECTORS 														   *
  * *********************************************************************************************************************/

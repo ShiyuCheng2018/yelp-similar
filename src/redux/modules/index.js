@@ -6,6 +6,7 @@ import app from "./app";
 import search from "./search";
 import login from "./login";
 import user from "./user";
+import purchase from "./purchase";
 
 // combine all reducers
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	search,
 	login,
 	user,
+	purchase,
 });
 
 export default rootReducer;
