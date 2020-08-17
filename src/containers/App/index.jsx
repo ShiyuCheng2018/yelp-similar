@@ -5,26 +5,33 @@ import {connect} from "react-redux";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {actions as appActions, getError} from "../../redux/modules/app";
 import "./style.css";
-import Home from "../Home";
-import ProductDetail from "../ProductDetail";
-import Search from "../Search";
-import SearchResult from "../SearchResult";
-import Login from "../Login";
-import PrivateRoute from "../PrivateRoute";
-import User from "../User";
-import Purchase from "../Purchase";
+import AsyncComponent from "../../utils/AsyncComponent";
 
-const mapStateToProps = (state, props) => {
-	return {
-		error: getError(state),
-	};
-};
+/***********************************************************************************************************************
+ * 										STATIC COMPONENTS' IMPORTS (X)													*
+ * *********************************************************************************************************************/
 
-const mapDispatchToProps = (dispatch) => {
-	return {
-		appActions: bindActionCreators(appActions, dispatch),
-	};
-};
+// import Home from "../Home";
+// import ProductDetail from "../ProductDetail";
+// import Search from "../Search";
+// import SearchResult from "../SearchResult";
+// import Login from "../Login";
+// import PrivateRoute from "../PrivateRoute";
+// import User from "../User";
+// import Purchase from "../Purchase";
+
+/***********************************************************************************************************************
+ * 										DYNAMIC COMPONENTS' IMPORTS (√)													*
+ * *********************************************************************************************************************/
+
+const Home = AsyncComponent(() => import("../Home"));
+const ProductDetail = AsyncComponent(() => import("../ProductDetail"));
+const Search = AsyncComponent(() => import("../Search"));
+const SearchResult = AsyncComponent(() => import("../SearchResult"));
+const Login = AsyncComponent(() => import("../Login"));
+const PrivateRoute = AsyncComponent(() => import("../PrivateRoute"));
+const User = AsyncComponent(() => import("../User"));
+const Purchase = AsyncComponent(() => import("../Purchase"));
 
 class App extends Component {
 	render() {
@@ -52,5 +59,20 @@ class App extends Component {
 		);
 	}
 }
+
+/***********************************************************************************************************************
+ * 													MAPPING  														   *
+ * *********************************************************************************************************************/
+const mapStateToProps = (state, props) => {
+	return {
+		error: getError(state),
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		appActions: bindActionCreators(appActions, dispatch),
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
