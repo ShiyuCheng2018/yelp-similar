@@ -25,7 +25,7 @@ const initialState = {
 /***********************************************************************************************************************
  * 													ACTIONS 														   *
  * *********************************************************************************************************************/
-export const action = {
+export const actions = {
 	setOrderQuantity: (quantity) => ({
 		type: types.SET_ORDER_QUANTITY,
 		quantity,
@@ -81,3 +81,14 @@ export default reducer;
 /***********************************************************************************************************************
  * 													SELECTORS 														   *
  * *********************************************************************************************************************/
+export const getQuantity = (state) => {
+	return state.purchase.quantity;
+};
+
+export const getTipStatus = (state) => {
+	return state.purchase.showTip;
+};
+
+export const getProduct = (state, id) => {
+	return getProductDetail(state, id);
+};
