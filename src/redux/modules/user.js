@@ -1,8 +1,9 @@
 import url from "../../utils/url";
 import {FETCH_DATA} from "../middlewares/api";
-import {AVAILABLE_TYPE, getOrderById, REFUND_TYPE, schema, TO_PAY_TYPE, actions as orderActions, types as orderTypes} from "./entities/orders";
+import {AVAILABLE_TYPE, getOrderById, getAllOrders, REFUND_TYPE, schema, TO_PAY_TYPE, actions as orderActions, types as orderTypes} from "./entities/orders";
 import {actions as commentActions} from "./entities/comments";
 import {combineReducers} from "redux";
+import {createSelector} from "reselect";
 
 /***********************************************************************************************************************
  * 													CONSTANTS 														   *
@@ -272,12 +273,24 @@ export default reducer;
  * *********************************************************************************************************************/
 
 export const getCurrentTab = (state) => state.user.currentTab;
-export const getOrders = (state) => {
-	const key = ["ids", "toPayIds", "availableIds", "refundIds"][state.user.currentTab];
-	return state.user.orders[key].map((id) => {
-		return getOrderById(state, id);
+
+// export const getOrders = (state) => {
+// 	const key = ["ids", "toPayIds", "availableIds", "refundIds"][state.user.currentTab];
+// 	return state.user.orders[key].map((id) => {
+// 		return getOrderById(state, id);
+// 	});
+// };
+
+const getUserOrders = (state) => state.user.orders;
+
+export const getOrders = createSelector([getCurrentTab, getUserOrders, getAllOrders], (tabIndex, userOrders, orders) => {
+	const key = ["ids", "toPayIds", "availableIds", "refundIds"][tabIndex];
+	const orderIds = userOrders[key];
+	return orderIds.map((id) => {
+		return orders[id];
 	});
-};
+});
+
 export const getDeletingOrderId = (state) => {
 	return state.user.currentOrder && state.user.currentOrder.isDeleting ? state.user.currentOrder.id : null;
 };

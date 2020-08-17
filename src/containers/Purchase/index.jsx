@@ -3,19 +3,21 @@ import Header from "../../components/Header";
 import PurchaseForm from "./components/PurchaseForm";
 import Tip from "../../components/Tip";
 import {connect} from "react-redux";
-import {actions as purchaseActions, getProduct, getQuantity, getTipStatus} from "../../redux/modules/purchase";
+import {actions as purchaseActions, getProduct, getQuantity, getTipStatus, getTotalPrice} from "../../redux/modules/purchase";
 import {actions as detailActions} from "../../redux/modules/detail";
 import {getUsername} from "../../redux/modules/login";
 import {bindActionCreators} from "redux";
 
 class Purchase extends Component {
 	render() {
-		const {product, phone, quantity, showTip} = this.props;
+		const {product, phone, quantity, showTip, totalPrice} = this.props;
 
 		return (
 			<div>
 				<Header title="Make an Order" onBack={this.handleBack} />
-				{product ? <PurchaseForm product={product} phone={phone} quantity={quantity} onSetQuantity={this.handleSetQuantity} onSubmit={this.handleSubmit} /> : null}
+				{product ? (
+					<PurchaseForm totalPrice={totalPrice} product={product} phone={phone} quantity={quantity} onSetQuantity={this.handleSetQuantity} onSubmit={this.handleSubmit} />
+				) : null}
 				{showTip ? <Tip message="Your just made an order ！" onClose={this.handleCloseTip} /> : null}
 			</div>
 		);
@@ -61,6 +63,7 @@ const mapStateToProps = (state, props) => {
 		quantity: getQuantity(state),
 		showTip: getTipStatus(state),
 		phone: getUsername(state),
+		totalPrice: getTotalPrice(state, productId),
 	};
 };
 

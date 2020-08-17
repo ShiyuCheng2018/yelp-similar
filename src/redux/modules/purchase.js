@@ -1,6 +1,7 @@
 import {getProductDetail} from "./entities/products";
 import {AVAILABLE_TYPE} from "./entities/orders";
 import {actions as orderActions} from "./entities/orders";
+import {createSelector} from "reselect";
 /***********************************************************************************************************************
  * 													CONSTANTS 														   *
  * *********************************************************************************************************************/
@@ -92,3 +93,10 @@ export const getTipStatus = (state) => {
 export const getProduct = (state, id) => {
 	return getProductDetail(state, id);
 };
+
+export const getTotalPrice = createSelector([getProduct, getQuantity], (product, quantity) => {
+	if (!product) {
+		return 0;
+	}
+	return product.currentPrice * quantity.toFixed(1);
+});
